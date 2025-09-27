@@ -29,7 +29,6 @@
       box-shadow: 0 4px 8px rgba(0, 100, 0, 0.08);
       position: relative;
       user-select: none;
-      /* transition будет управляться через JS */
     }
 
     .term {
@@ -240,7 +239,7 @@
     showBtn.addEventListener("click", toggleAnswer);
 
     copyBtn.addEventListener("click", async (e) => {
-      e.stopPropagation(); // не триггерить клик по карточке
+      e.stopPropagation();
       if (isAnimating) return;
       const termText = termEl.textContent;
       try {
@@ -328,4 +327,5 @@
   });
 </script>
 </body>
+
 </html>
