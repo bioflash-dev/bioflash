@@ -10,322 +10,74 @@
       background: #f0f9f4;
       color: #1a3a2a;
       max-width: 600px;
-      margin: 40px auto;
+      margin: 60px auto;
       padding: 20px;
       text-align: center;
-      overflow-x: hidden;
     }
-
-    .card {
+    h1 {
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #66bb6a;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+    .topic {
       background: #e8f5e9;
       border: 1px solid #c8e6c9;
       border-radius: 12px;
-      padding: 30px;
-      margin: 20px 0;
-      min-height: 180px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      box-shadow: 0 4px 8px rgba(0, 100, 0, 0.08);
-      position: relative;
-      user-select: none;
-      /* transition будет управляться через JS */
+      padding: 20px;
+      margin: 15px 0;
+      text-align: left;
     }
-
-    .term {
-      font-size: 24px;
-      font-weight: 700;
-      color: #2e7d32;
-      transition: transform 0.4s ease, margin-bottom 0.4s ease;
-    }
-
-    .definition {
-      font-size: 18px;
-      color: #388e3c;
-      line-height: 1.5;
-      opacity: 0;
-      height: 0;
-      overflow: hidden;
+    .topic h2 {
       margin-top: 0;
-      transition:
-        opacity 0.4s ease 0.1s,
-        height 0.4s ease,
-        margin-top 0.4s ease;
+      color: #2e7d32;
     }
-
-    .card.show-answer .term {
-      transform: translateY(-20px);
-      margin-bottom: 10px;
+    .topic p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #388e3c;
     }
-
-    .card.show-answer .definition {
-      opacity: 1;
-      height: auto;
-      margin-top: 12px;
-    }
-
-    button {
+    a.button {
+      display: inline-block;
       background: #4caf50;
       color: white;
-      border: none;
+      text-decoration: none;
+      padding: 10px 20px;
       border-radius: 8px;
-      padding: 10px 16px;
-      font-size: 15px;
-      cursor: pointer;
-      margin: 5px;
-      transition: background 0.2s, transform 0.1s;
+      margin-top: 10px;
+      transition: background 0.2s;
     }
-
-    button:hover {
+    a.button:hover {
       background: #388e3c;
     }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
     .footer {
       margin-top: 40px;
       color: #66bb6a;
       font-size: 14px;
     }
-
-    h1 {
-      color: #2e7d32;
-    }
-
-    p {
-      color: #66bb6a;
-      font-size: 18px;
-      margin-top: 8px;
-    }
   </style>
 </head>
 <body>
   <h1>BioFlash</h1>
-  <p>Карточки по биологии: Строение клетки</p>
+  <p>Бесплатные карточки по биологии</p>
 
-  <div class="card" id="card">
-    <div class="term" id="term">Загрузка...</div>
-    <div class="definition" id="definition"></div>
+  <div class="topic">
+    <h2>🧬 Строение клетки</h2>
+    <p>25 карточек: мембрана, цитоплазма, органеллы, цитоскелет и др.</p>
+    <a href="cell.html" class="button">Открыть</a>
   </div>
 
-  <div>
-    <button id="prevBtn">← Назад</button>
-    <button id="showBtn">Показать ответ</button>
-    <button id="copyBtn">Копировать</button>
-    <button id="nextBtn">Вперёд →</button>
+  <div class="topic">
+    <h2>🔬 Митоз</h2>
+    <p>12 карточек: профаза, метафаза, анафаза, телофаза, цитокинез и др.</p>
+    <a href="mitosis.html" class="button">Открыть</a>
   </div>
 
   <div class="footer">
-    BioFlash • Бесплатные карточки по биологии
+    BioFlash • Бесплатно и без рекламы
   </div>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const cards = [
-      { "term": "Клеточная мембрана", "definition": "Двухслойная липидная оболочка, регулирующая поступление и выход веществ из клетки." },
-{ "term": "Цитоплазма", "definition": "Вязкое полужидкое содержимое клетки между ядром и мембраной, где расположены органеллы." },
-{ "term": "Ядро", "definition": "Мембранная органелла, содержащая генетический материал (ДНК) и управляющая клеточной деятельностью." },
-{ "term": "Ядерная оболочка", "definition": "Двойная мембрана с порами, окружающая ядро и отделяющая его от цитоплазмы." },
-{ "term": "Хроматин", "definition": "Комплекс ДНК и белков в ядре, из которого формируются хромосомы во время деления." },
-{ "term": "Ядрышко", "definition": "Плотная структура внутри ядра, участвующая в сборке рибосом." },
-{ "term": "Митохондрия", "definition": "Органелла, в которой происходит клеточное дыхание и синтез АТФ — основного источника энергии." },
-{ "term": "Рибосома", "definition": "Немембранная структура из РНК и белков, осуществляющая синтез белков." },
-{ "term": "Шероховатый эндоплазматический ретикулум", "definition": "Сеть мембранных канальцев с прикреплёнными рибосомами, участвующая в синтезе и транспорте белков." },
-{ "term": "Гладкий эндоплазматический ретикулум", "definition": "Мембранная сеть без рибосом, участвующая в синтезе липидов, детоксикации и накоплении ионов кальция." },
-{ "term": "Аппарат Гольджи", "definition": "Стопка уплощённых мембранных мешочков, модифицирующая, сортирующая и упаковывающая белки и липиды для секреции или транспорта." },
-{ "term": "Лизосома", "definition": "Мембранный пузырёк с гидролитическими ферментами для внутриклеточного расщепления веществ." },
-{ "term": "Пероксисома", "definition": "Органелла, содержащая ферменты, разлагающие перекись водорода и участвующие в метаболизме жирных кислот." },
-{ "term": "Цитоскелет", "definition": "Сеть белковых волокон (микрофиламенты, промежуточные филаменты, микротрубочки), обеспечивающая форму клетки и внутриклеточный транспорт." },
-{ "term": "Микротрубочки", "definition": "Компоненты цитоскелета, участвующие в делении клетки, транспорте органелл и строении жгутиков и ресничек." },
-{ "term": "Микрофиламенты", "definition": "Тонкие белковые нити (актин), участвующие в сокращении, движении и поддержании формы клетки." },
-{ "term": "Промежуточные филаменты", "definition": "Белковые волокна, обеспечивающие механическую прочность клетки." },
-{ "term": "Клеточный центр (центросома)", "definition": "Область цитоплазмы, содержащая пару центриолей и организующая микротрубочки веретена деления." },
-{ "term": "Центриоль", "definition": "Цилиндрическая структура из микротрубочек, участвующая в организации веретена деления у животных клеток." },
-{ "term": "Вакуоль", "definition": "Крупный мембранный пузырь в растительной клетке, хранящий воду, ионы, питательные вещества и поддерживает тургор." },
-{ "term": "Хлоропласт", "definition": "Органелла растительных клеток, содержащая хлорофилл и осуществляющая фотосинтез." },
-{ "term": "Клеточная стенка", "definition": "Жёсткая внешняя оболочка растительных, грибных и бактериальных клеток, обеспечивающая защиту и поддержку." },
-{ "term": "Плазмодесмы", "definition": "Каналы через клеточные стенки растений, соединяющие цитоплазму соседних клеток." },
-{ "term": "Гликокаликс", "definition": "Углеводный слой на поверхности животной клетки, участвующий в распознавании и защите." },
-{ "term": "Реснички и жгутики", "definition": "Подвижные выросты клеточной поверхности, состоящие из микротрубочек и обеспечивающие движение клетки или жидкости." }
-    ];
-
-    let currentIndex = 0;
-    let isAnimating = false;
-    let isSwiping = false; // флаг для отличия свайпа от клика
-    const cardEl = document.getElementById("card");
-    const termEl = document.getElementById("term");
-    const defEl = document.getElementById("definition");
-    const showBtn = document.getElementById("showBtn");
-    const copyBtn = document.getElementById("copyBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const prevBtn = document.getElementById("prevBtn");
-
-    if (!cardEl || !termEl || !defEl) {
-      console.error("DOM elements not found!");
-      return;
-    }
-
-    function setCardContent(index) {
-      termEl.textContent = cards[index].term;
-      defEl.textContent = cards[index].definition;
-      cardEl.classList.remove("show-answer");
-    }
-
-    function animateCard(direction) {
-      if (isAnimating) return;
-      isAnimating = true;
-      isSwiping = true; // помечаем, что начался свайп
-
-      const duration = 300;
-
-      if (direction === 'next') {
-        cardEl.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-        cardEl.style.transform = 'translateX(-100%) scale(0.9)';
-        cardEl.style.opacity = '0';
-
-        setTimeout(() => {
-          currentIndex = (currentIndex + 1) % cards.length;
-          setCardContent(currentIndex);
-
-          cardEl.style.transition = 'none';
-          cardEl.style.transform = 'translateX(100%) scale(0.9)';
-          cardEl.style.opacity = '0';
-          void cardEl.offsetWidth;
-
-          cardEl.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-          cardEl.style.transform = 'translateX(0) scale(1)';
-          cardEl.style.opacity = '1';
-
-          setTimeout(() => {
-            isAnimating = false;
-            isSwiping = false;
-          }, duration);
-        }, duration);
-      }
-      else if (direction === 'prev') {
-        cardEl.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-        cardEl.style.transform = 'translateX(100%) scale(0.9)';
-        cardEl.style.opacity = '0';
-
-        setTimeout(() => {
-          currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-          setCardContent(currentIndex);
-
-          cardEl.style.transition = 'none';
-          cardEl.style.transform = 'translateX(-100%) scale(0.9)';
-          cardEl.style.opacity = '0';
-          void cardEl.offsetWidth;
-
-          cardEl.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
-          cardEl.style.transform = 'translateX(0) scale(1)';
-          cardEl.style.opacity = '1';
-
-          setTimeout(() => {
-            isAnimating = false;
-            isSwiping = false;
-          }, duration);
-        }, duration);
-      }
-    }
-
-    function toggleAnswer() {
-      if (!isAnimating && !isSwiping) {
-        cardEl.classList.toggle("show-answer");
-      }
-    }
-
-    // === Обработчики кнопок ===
-    showBtn.addEventListener("click", toggleAnswer);
-
-    copyBtn.addEventListener("click", async (e) => {
-      e.stopPropagation(); // не триггерить клик по карточке
-      if (isAnimating) return;
-      const termText = termEl.textContent;
-      try {
-        await navigator.clipboard.writeText(termText);
-        const originalText = copyBtn.textContent;
-        copyBtn.textContent = "Copied!";
-        setTimeout(() => copyBtn.textContent = originalText, 1000);
-      } catch (err) {
-        console.error("Failed to copy:", err);
-      }
-    });
-
-    nextBtn.addEventListener("click", () => animateCard('next'));
-    prevBtn.addEventListener("click", () => animateCard('prev'));
-
-    // === Клик по карточке ===
-    cardEl.addEventListener("click", (e) => {
-      // Игнорировать, если клик по кнопке внутри (например, Copy)
-      if (e.target.closest('button')) return;
-      toggleAnswer();
-    });
-
-    // === Клавиатура ===
-    document.addEventListener("keydown", (e) => {
-      if (isAnimating) return;
-      if (e.code === "Space") {
-        e.preventDefault();
-        toggleAnswer();
-      } else if (e.code === "ArrowRight") {
-        animateCard('next');
-      } else if (e.code === "ArrowLeft") {
-        animateCard('prev');
-      }
-    });
-
-    // === Колёсико ===
-    let lastScrollTime = 0;
-    document.addEventListener("wheel", (e) => {
-      if (isAnimating) return;
-      const now = Date.now();
-      if (now - lastScrollTime < 300) return;
-      lastScrollTime = now;
-      if (e.deltaY > 0) animateCard('next');
-      else animateCard('prev');
-    }, { passive: true });
-
-    // === Свайп ===
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    function handleStart(x) {
-      touchStartX = x;
-      isSwiping = false; // сброс — возможно, будет клик
-    }
-
-    function handleEnd(x) {
-      touchEndX = x;
-      if (!touchStartX || !touchEndX) return;
-      const diff = touchStartX - touchEndX;
-      const threshold = 50;
-
-      if (Math.abs(diff) > threshold) {
-        isSwiping = true;
-        if (diff > 0) animateCard('next');
-        else animateCard('prev');
-      }
-      touchStartX = 0;
-      touchEndX = 0;
-    }
-
-    cardEl.addEventListener("touchstart", (e) => handleStart(e.changedTouches[0].screenX));
-    cardEl.addEventListener("touchend", (e) => handleEnd(e.changedTouches[0].screenX));
-
-    cardEl.addEventListener("mousedown", (e) => {
-      handleStart(e.screenX);
-      const mouseUp = (ev) => {
-        handleEnd(ev.screenX);
-        document.removeEventListener("mouseup", mouseUp);
-      };
-      document.addEventListener("mouseup", mouseUp);
-    });
-
-    // Первая карточка
-    setCardContent(currentIndex);
-  });
-</script>
 </body>
 </html>
